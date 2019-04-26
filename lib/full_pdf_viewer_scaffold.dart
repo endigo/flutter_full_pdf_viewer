@@ -8,12 +8,14 @@ class PDFViewerScaffold extends StatefulWidget {
   final PreferredSizeWidget appBar;
   final String path;
   final bool primary;
+  final PdfViewerConfig config;
 
   const PDFViewerScaffold({
     Key key,
     this.appBar,
     @required this.path,
     this.primary = true,
+    this.config,
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _PDFViewScaffoldState extends State<PDFViewerScaffold> {
       pdfViwerRef.launch(
         widget.path,
         rect: _rect,
+        config: widget.config,
       );
     } else {
       final rect = _buildRect(context);
@@ -67,7 +70,7 @@ class _PDFViewScaffoldState extends State<PDFViewerScaffold> {
     final mediaQuery = MediaQuery.of(context);
     final topPadding = widget.primary ? mediaQuery.padding.top : 0.0;
     final top =
-    fullscreen ? 0.0 : widget.appBar.preferredSize.height + topPadding;
+        fullscreen ? 0.0 : widget.appBar.preferredSize.height + topPadding;
     var height = mediaQuery.size.height - top;
     if (height < 0.0) {
       height = 0.0;

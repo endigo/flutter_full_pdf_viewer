@@ -63,7 +63,7 @@ public class FlutterFullPdfViewerPlugin implements MethodCallHandler, PluginRegi
         }
         FrameLayout.LayoutParams params = buildLayoutParams(call);
         activity.addContentView(flutterFullPdfViewerManager.pdfView, params);
-        flutterFullPdfViewerManager.openPDF(path);
+        flutterFullPdfViewerManager.openPDF(path, call);
         result.success(null);
     }
 

@@ -25,14 +25,20 @@ class FlutterFullPdfViewerManager {
         this.activity = activity;
     }
 
-    void openPDF(String path) {
+    void openPDF(String path, MethodCall call) {
         File file = new File(path);
+
         pdfView.fromFile(file)
-                .enableSwipe(true)
-                .swipeHorizontal(false)
-                .enableDoubletap(true)
-                .defaultPage(0)
-                .load();
+            .enableSwipe(getBoolean(call, "enableSwipe"))
+            .swipeHorizontal(getBoolean(call, "swipeHorizontal"))
+            .password(getString(call,"password"))
+            .nightMode(getBoolean(call,"nightMode"))
+            .autoSpacing(getBoolean(call,"autoSpacing"))
+            .pageFling(getBoolean(call,"pageFling"))
+            .pageSnap(getBoolean(call,"pageSnap"))
+            .enableDoubletap(true)
+            .defaultPage(0)
+            .load();
     }
 
     void resize(FrameLayout.LayoutParams params) {
@@ -55,5 +61,13 @@ class FlutterFullPdfViewerManager {
 
     void close() {
         close(null, null);
+    }
+
+    Boolean getBoolean(MethodCall call, String key) {
+        return call.hasArgument(key) ? (Boolean) call.argument(key): false;
+    }
+
+    String getString(MethodCall call, String key) {
+        return call.hasArgument(key) ? (String) call.argument(key) : "";
     }
 }
